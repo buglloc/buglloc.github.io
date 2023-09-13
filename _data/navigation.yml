@@ -1,7 +1,7 @@
 main:
   - title: "Постики"
     url: /posts/
-  - title: "Категории"
+  - title: "Разделы"
     url: /categories/
 #  - title: "About"
 #    url: /about/

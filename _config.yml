@@ -22,6 +22,7 @@ github_username: buglloc
 minimal_mistakes_skin: dirt
 search: true
 repository: "buglloc/buglloc.github.io"
+locale: "ru-RU"
 
 # Build settings
 markdown: kramdown
