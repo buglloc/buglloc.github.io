@@ -68,12 +68,15 @@ author:
     - label: "Гитхабчик"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/bugloc"
+    - label: "Канальчик"
+      icon: "fab fa-fw fa-telegram"
+      url: "https://t.me/UTBDK"
 
 footer:
   links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/buglloc"
+    - label: "Телеграмчик"
+      icon: "fab fa-fw fa-telegram"
+      url: "https://t.me/UTBDK"
 
 defaults:
   # _posts
