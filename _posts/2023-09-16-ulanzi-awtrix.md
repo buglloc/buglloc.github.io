@@ -97,7 +97,7 @@ OK
 Курс валют я делал в [Node-RED](https://nodered.org/) и двух вариациях:
   - RUB -> USDT && USDT -> THB в P2P Binance, пока он еще работал ([source](https://gist.github.com/buglloc/a93405ea786dfa4add584bc926406ffe)):
 ![binance flow](/assets/images/posts/awtrix-binance-flow.png)
-  * RUB -> THB в Contant ([source]()):
+  * RUB -> THB в Contant:
 ![contant flow](/assets/images/posts/awtrix-contact-flow.png)
 
 Работает, как вы понимаете, не замысловато:
