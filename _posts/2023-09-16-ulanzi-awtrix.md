@@ -1,5 +1,7 @@
 ---
 title: "Ulanzi TC001 Desktop Clock"
+header:
+  og_image: "/assets/images/posts/awtrix-aweeting-upcoming.gif"
 classes: wide
 categories:
   - iot
