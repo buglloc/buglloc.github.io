@@ -1,6 +1,8 @@
 ---
 title: "Travel router: FIDO2 + LUKS in OpenWrt"
 classes: wide
+header:
+  og_image: "/assets/images/posts/glinet-fido2/cover.jpg"
 categories:
   - home-infra
 ---

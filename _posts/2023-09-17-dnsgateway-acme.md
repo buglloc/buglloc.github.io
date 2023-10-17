@@ -1,5 +1,7 @@
 ---
 title: "DNSGateway + Cloudflare to issue Let's Encrypt certificates with DNS-01 challenges"
+header:
+  og_image: "/assets/images/posts/dnsgateway-overview.svg"
 classes: wide
 categories:
   - home-infra

@@ -1,5 +1,7 @@
 ---
 title: "WasherNotifier: the journey"
+header:
+  og_image: "/assets/images/posts/wn/cover.excalidraw.png"
 classes: wide
 toc: false
 categories:
