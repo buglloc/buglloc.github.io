@@ -5,7 +5,7 @@ categories:
   - home-infra
 ---
 Уж к концу-то 23го года польза от дорожного роутера должна быть очевидна любому истинному шотландцу, но ко мне это осознание пришло буквально в прошлом году. 
-Видимо, нужно было кожей почувствовать :) Ну а раз уж это дорожное устройство, то без шифрования данных ему не обойтись. О том как я дружил [FIDO2](https://fidoalliance.org/fido2/) [HMAC Secret Extension](https://fidoalliance.org/specs/fido-v2.0-id-20180227/fido-client-to-authenticator-protocol-v2.0-id-20180227.html#sctn-hmac-secret-extension)  с [LUKS](https://gitlab.com/cryptsetup/cryptsetup) контейнером при запуске [OpenWrt](https://openwrt.org/) и будет этот пост, ух.
+Видимо, нужно было кожей почувствовать :) Ну а какое дорожное устройство без шифрования хранящихся на нем данных? О том как я дружил [FIDO2](https://fidoalliance.org/fido2/) [HMAC Secret Extension](https://fidoalliance.org/specs/fido-v2.0-id-20180227/fido-client-to-authenticator-protocol-v2.0-id-20180227.html#sctn-hmac-secret-extension)  с [LUKS](https://gitlab.com/cryptsetup/cryptsetup) контейнером при запуске [OpenWrt](https://openwrt.org/) и будет этот пост.
 
 
 ![](/assets/images/posts/glinet-fido2/cover.jpg){: .align-center}
@@ -25,15 +25,15 @@ categories:
   - достойное железо, особенно для путешественника
   * есть USB Type-A, который можно использовать для всякой периферии
   - питается от USB Type-C, ненавижу возить лишние и не универсальные задярки
-  - есть поддержка SD карточки, на которую можно закинуть кинчики и стримить с помощью DLNA на телефон/ноут/chromecast/etc. Конечно, вместо DLNA я бы предпочел Jellyfin, но это же роутер ;)
+  - есть поддержка SD карточки, на которую можно закинуть кинчики и стримить с помощью DLNA на телефон/ноут/chromecast/etc. Конечно, вместо DLNA я бы предпочел Jellyfin, но роутеру GPU не положено :(
   - имеет настолько простой UI, что его не страшно давать даже не подготовленным или уставшим людям
-  - основан на OpenWrt, пусть и на 21.02, пусть и с бесконечным количеством патчей да костылей
+  - основан на OpenWrt, пусть и на версии 21.02, пусть и с бесконечным количеством патчей
   - [до не давних событий был достаточно открытым](https://forum.gl-inet.com/t/formal-statement-on-gl-inet-software-going-closed-source/33288)
 
 Два последних пункта, правда, наталкивают меня на мысль не поискать ли хорошую WiFi карточку (это сложнее, чем кажется) для [NanoPi R5C](https://www.friendlyelec.com/index.php?route=product/product&product_id=290) и собрать сильно более открытый роутер, но речь сегодня не об этом. Во всем остальном он меня полностью устраивает. Во всем остальном, кроме одного - он не имеет шифрования диска с чем я не намерен мириться ◟(`ﮧ´ ◟ )
 
-# Но зачем шифрование?!
-А зотем! Вы, наверное, не поверите, но дело совсем не в паранойе. Все куда проще - я НЕ хочу в спешке менять явки и пароли, хранящиеся в роутере, потому что мой багаж задержали/утеряли/украли/etc. И это, наверное, максимум, чем тут может помочь шифрование диска. Т.е. логично, что если какой-то злой дяденька имел физический контакт с твоим устройством - его нужно сжечь и больше не использовать. Во-первых, это больше не твоя железка, а во-вторых, ну фу! К счастью, обычно `ЖЕЛЕЗКА < ХРАНИМЫЕ КРЕДЫ`, потому не велика беда, особенно когда ты под пальмой и в отпуске (^_^)
+# Но зачем?!
+А зотем! Вы, наверное, не поверите, но я хочу пошифровать данные не в приступе паранойи. Все куда проще - я НЕ хочу в спешке менять явки и пароли, хранящиеся в роутере, потому что мой багаж задержали/утеряли/украли/etc. И это, наверное, максимум, чем тут может помочь шифрование диска. Т.е. логично, что если какой-то злой дяденька имел физический контакт с твоим устройством - его нужно сжечь и больше не использовать. Во-первых, это больше не твоя железка, а во-вторых, ну фу! К счастью, обычно `ЖЕЛЕЗКА < ХРАНИМЫЕ КРЕДЫ`, потому не велика беда, особенно когда ты под пальмой и в отпуске (^_^)
 
 # А как?!
 А собсно все уже было придумано до меня:
@@ -42,26 +42,52 @@ categories:
 
 Насколько я понимаю, основное предназначение extroot в OpenWrt - расширить rootfs за счет какого-то внешнего накопителя в случае, если встроенная флешка не вместительнее наперстка. И в этом ему очень помогает использование [OverlayFS](https://docs.kernel.org/filesystems/overlayfs.html). В стоке он состоит из read-only раздела `rootfs`, поверх которого накладывается writable `rootfs_data`/`ubifs`. Таким образом система живет в `ro` части, а конфиги/доп. пакетики/etc в `rw`. Меняем раздел для `rw` части на кастомный - хоба, вот и extroot :)
 
-Получается, все чего я должен хотеть - пошифрованный extroot, который будет хранить мои боевые конфиги, ключики, пароли и прочие непотребства. Безопаснее с Slate AX уже не будет. Бонусом появляется возможность загрузиться без использования оного, как-будто так и нужно ;)
+В моем случае Slate AX оборудован 128MB NAND Flash, из которой пользователю доступно меньше половины:
+```
+root@GL-AXT1800:~# cat /proc/mtd
+dev:    size   erasesize  name
+mtd0: 00180000 00020000 "0:SBL1"
+mtd1: 00100000 00020000 "0:MIBIB"
+mtd2: 00380000 00020000 "0:QSEE"
+mtd3: 00080000 00020000 "0:DEVCFG"
+mtd4: 00080000 00020000 "0:RPM"
+mtd5: 00080000 00020000 "0:CDT"
+mtd6: 00080000 00020000 "0:APPSBLENV"
+mtd7: 00180000 00020000 "0:APPSBL"
+mtd8: 00080000 00020000 "0:ART"
+mtd9: 07280000 00020000 "rootfs"
+mtd10: 00080000 00020000 "log"
+mtd11: 00080000 00020000 "0:ETHPHYFW"
+mtd12: 0041e000 0001f000 "kernel"
+mtd13: 034ad000 0001f000 "ubi_rootfs"
+mtd14: 03339000 0001f000 "rootfs_data"
+root@GL-AXT1800:~# echo $((0x03339000/1024))
+52452
+```
+Это не дофига, но для типичных роутерных нужд хватит и в пару раз меньшего объема. Получается, все чего я должен хотеть - пошифрованный extroot, который будет хранить мои боевые конфиги, ключики, пароли и прочие непотребства. Безопаснее с этим роутером уже не будет. Бонусом появляется возможность загрузиться без использования оного, как-будто так и нужно ;)
 
-И я знаю два логичных пути достижения этого:
+И я знаю несколько путей достижения этого:
   1. можно носить с собой пошифрованную флешку с конфигами, а ключ для расшифровки хранить в роутере
   2. можно носить с собой нечто, что расшифрует данные во внутреннем хранилище роутера
+  3. третья смешная опция
 
 Оба варика хороши тем, что требуют пролюбить оба устройства (e.g. роутер + флешку), а не что-то одно. Официальная документация [LUKS encrypted extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration#luks_encrypted_extroot) + [Disk Encryption](https://openwrt.org/docs/guide-user/storage/disk.encryption) больше про первый путь (но от этого не менее хороша btw). Мне же больше приглянулся второй:
   - занимаем порт только на этапе загрузки, а это всегда хорошо когда он у тебя один :)
   - при желании, можно оставить включенным роутер, а ключ утащить с собой
+  - не возим +1 гаджет _только_ для нужд роутера
 
-Осталось определиться с тем, что расшифрует данные. Я, честно говоря, метался между напилить ченить самому на ESP32 или взять универсальное/готовое. Любопытство во мне вовремя победило и я решил воспользоваться FIDO2 токеном. Благо, большая часть реализаций должна поддерживать [HMAC Secret Extension](https://fidoalliance.org/specs/fido-v2.0-id-20180227/fido-client-to-authenticator-protocol-v2.0-id-20180227.html#sctn-hmac-secret-extension):
+Осталось определиться с тем, что расшифрует данные. Я, честно говоря, метался между напилить ченить самому (закончить таки Lupa/начать писать Hang) или взять универсальное/готовое. Любопытство во мне вовремя победило и я решил воспользоваться FIDO2 токеном. Благо, большая часть реализаций должна поддерживать [HMAC Secret Extension](https://fidoalliance.org/specs/fido-v2.0-id-20180227/fido-client-to-authenticator-protocol-v2.0-id-20180227.html#sctn-hmac-secret-extension):
 > This extension is used by the platform to retrieve a symmetric secret from the authenticator when it needs to encrypt or decrypt data using that symmetric secret. This symmetric secret is scoped to a credential. The authenticator and the platform each only have the part of the complete secret to prevent offline attacks. This extension can be used to maintain different secrets on different machines.
 
-Который как-раз для этого и предназначен + очень уж к лицу роутеру %) Звучит план прилично, дело за реализацией!
+Который как-раз для этого и предназначен.
 
 # О FIDO2 токенах
 В интернете не мало бит информации о том, что такое FIDO U2F и FIDO2. Вот рандомный пост, например: [What Is FIDO2 and How Does It Work?](https://hideez.com/en-int/blogs/news/fido2-explained). Для сегодняшней же задачи важнее понимать, что имплементация должна поддерживать расширение `hmac-secret`, которое появилось в CTAP2 спецификации. Поэтому все U2F токены можно сразу отметать, а у остальных узнать список доступных расширений. Из тех, что оказались у меня под рукой:
 ![](/assets/images/posts/glinet-fido2/fido_devices.excalidraw.png){: .align-center}
 
-`hmac-secret` поддерживают как Open Source реализации токенов [Pico FIDO](https://github.com/polhenarejos/pico-fido) и [OpenSK](https://github.com/google/OpenSK), так и проприетарные [YubiKey 5 Nano](https://www.yubico.com/product/yubikey-5-nano/) (NB: нужна [firmware v5.2.3+](https://www.yubico.com/blog/whats-new-in-yubikey-firmware-5-2-3/)). По идее, в этом же списке должны быть Nitrokey FIDO2, SoloKey и многие другие, но их нет у меня. Правда, возможно, только пока нет, ибо из тех что у меня в наличии мне пока не нравится ни один. Но  [nRF52840 MDK USB Dongle](https://a.aliexpress.com/_mtdHKns) (на фотке он беленький, с литерой M) не понравился меньше остальных. Вот, кстати, он прошитый в OpenSK (внимание на `extension strings`):
+`hmac-secret` ожидаемо поддерживают все FIDO2 реализации. Как Open Source реализации токенов [Pico FIDO](https://github.com/polhenarejos/pico-fido) и [OpenSK](https://github.com/google/OpenSK), так и проприетарные [YubiKey 5 Nano](https://www.yubico.com/product/yubikey-5-nano/) (NB: нужна [firmware v5.2.3+](https://www.yubico.com/blog/whats-new-in-yubikey-firmware-5-2-3/)). По идее, в этом же списке должны быть Nitrokey FIDO2, SoloKey и многие другие, но их нет у меня. Правда, возможно, только пока нет, ибо из тех что у меня в наличии мне пока не нравится ни один. Но  [nRF52840 MDK USB Dongle](https://a.aliexpress.com/_mtdHKns) (на фотке он беленький, с литерой перевернутой M) не понравился меньше остальных.
+
+Вот, кстати, OpenSK из `stable` ветки (внимание на `extension strings`):
 ```
 $ fido2-token -I /dev/hidraw19 
 proto: 0x02
@@ -71,24 +97,13 @@ build: 0x00
 caps: 0x05 (wink, cbor, msg)
 version strings: U2F_V2, FIDO_2_0
 extension strings: hmac-secret
-aaguid: d8b65d13a67e4dd0a717f63b01553dd0
-options: rk, up, clientPin
-fwversion: 0x0
-maxmsgsiz: 1024
-maxcredcntlst: 0
-maxcredlen: 0
-maxlargeblob: 0
-pin protocols: 1
-pin retries: 5
-pin change required: false
-uv retries: undefined
+[...]
 ```
 
 # И как?
-А я расскажу как. Ведь пришла пора настраивать роутер (finally!). Ресетим и обновляем, делаем первичную настройку и логинимся по SSH. А дальше...
+А я вам сейчас расскажу как. Ведь пришла пора настраивать роутер (finally!). Ресетим и обновляем, делаем первичную настройку, логинимся по SSH, а дальше...
 ### OpenWrt: FIDO2 support
-Для начала заводим поддержку FIDO2 токенов, т.к. без этого нет смысла продолжать. Так уж вышло, что libfido2 под OpenWrt собирается [без тулов](https://github.com/openwrt/packages/blob/03a69f84bcf95bf2d54aa8c26814dbfe218e706a/libs/libfido2/Makefile#L48), а для 21.02 еще и древний как чорт. Ну да не беда, OSS же:
-[Форкаем пакетик](https://github.com/buglloc/openwrt-packages/blob/main/fido2-tools/Makefile) и включаем сборку тулов
+Для начала заводим поддержку FIDO2 токенов, т.к. без этого нет смысла продолжать. Так уж вышло, что libfido2 под OpenWrt собирается [без тулов](https://github.com/openwrt/packages/blob/03a69f84bcf95bf2d54aa8c26814dbfe218e706a/libs/libfido2/Makefile#L48), а для 21.02 он еще и древний как чорт. Ну да не беда, OSS же - [форкаем пакетик](https://github.com/buglloc/openwrt-packages/blob/main/fido2-tools/Makefile) и включаем сборку тулов.
 
 Собираем и ставим наши пакетики + поддержку usb:
 ```
@@ -106,10 +121,10 @@ root@GL-AXT1800:/tmp/newpkgs# fido2-token -L
 /dev/hidraw0: vendor=0x1915, product=0x521f (Nordic Semiconductor ASA OpenSK)
 ```
 
-Выглядит отлично!
+То, что доктор прописал!
 
 ### OpenWrt: LUKS container
-Дальше варим LUKS контейнер, поглядывая в гайд [Disk Encryption](https://openwrt.org/docs/guide-user/storage/disk.encryption) от OpenWrt. В качестве контейнера у меня будет использоваться файлик т.к. 1) это удобнее 2) cryptsetup не поддерживает MTD.
+Дальше варим контейнер LUKS, поглядывая в гайд [Disk Encryption](https://openwrt.org/docs/guide-user/storage/disk.encryption) от OpenWrt. В качестве контейнера у меня будет использоваться файлик т.к. 1) это удобнее 2) cryptsetup не поддерживает MTD.
 
 Погнали, ставим нужные зависимости и удаляем не нужные:
 ```
@@ -118,7 +133,7 @@ opkg install block-mount kmod-fs-ext4 e2fsprogs kmod-crypto-ecb kmod-crypto-xts 
 opkg remove --force-depends lvm2
 ```
 
-Создаем и открываем LUKS контейнер с двухкомпонентным паролем:
+Создаем и разблокируем LUKS-контейнер:
 ```
 . /etc/fidele.conf
 mkdir -p $(dirname "$FIDELE_LUKS_PATH")
@@ -133,7 +148,7 @@ root@GL-AXT1800:~# ls -la /dev/mapper/$FIDELE_LUKS_LABEL
 brw-------    1 root     root      252,   0 Oct 16 21:33 /dev/mapper/extroot
 ```
 
-Тут стоит пояснить несколько вещей. По первых, я использую luks1, т.к. у него заголовок 2MiB, против 16MiB у luks2. Во-вторых, не удивляйтесь [fidele](https://github.com/buglloc/openwrt-packages/tree/main/fidele) . Это другой важный пакетик, который мы ставили с моего гитхаба. Он как раз и будет клеем между `block-mount` и `fido2-tools`. У него, кстати, настроечки есть:
+Тут стоит пояснить несколько вещей. Во-первых, я использую luks1, т.к. у него заголовок 2MiB, против 16MiB у luks2. Конечно он не так фичаст, но 14MiB есть 14MiB. Во-вторых, не удивляйтесь [fidele](https://github.com/buglloc/openwrt-packages/tree/main/fidele) . Это другой важный пакетик, который мы ставили с моего гитхаба. Он как раз и будет клеем между `block-mount` и `fido2-tools`. У него, кстати, настроечки есть:
 ```
 root@GL-AXT1800:~# cat /etc/fidele.conf
 # Path to the luks crypto container
@@ -161,13 +176,13 @@ FIDELE_UV_REQUIRED="true"
 FIDELE_PIN=""
 ```
 
-А так, выглядит как успех. Продолжаем!
+Не останавливаемся!
 ### OpenWrt: extroot with LUKS
-Ну и теперь самая интересная часть - подготовка и монтирование extroot. Тут, стоит обратиться к гайдам [extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration) и [LUKS encrypted extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration#luks_encrypted_extroot) от OpenWrt. Но в двух словах, наш план таков:
+Вот и самая интересная часть - подготовка и монтирование extroot. Тут, стоит обратиться к гайдам [extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration) и [LUKS encrypted extroot](https://openwrt.org/docs/guide-user/additional-software/extroot_configuration#luks_encrypted_extroot) от OpenWrt. Но в двух словах, наш план таков:
   - вызываем [fidele-luks-open](https://github.com/buglloc/openwrt-packages/blob/main/fidele/files/usr/sbin/fidele-luks-open) из [preinit](https://openwrt.org/docs/techref/preinit_mount#preinit) стадии загрузки
-  - он открывает наш LUKS контейнер
+  - он открывает наш LUKS-контейнер
   - дальше OpenWrt находит extroot в fstab конфиге _текущего_  `rootfs_data` 
-  - делает всю остальную магию сам
+  - делает всю остальную магию по монтированию и сборке overlay с использованием  `rootfs_data` из крипто-контейнера
 
 Не станем откладывать, форматируем LUKS раздел:
 ```
@@ -187,7 +202,7 @@ root@GL-AXT1800:~# block info
 /dev/dm-0: UUID="1174715e-6d5f-4bde-be08-5b977ad31e7e" LABEL="extroot" VERSION="1.0" TYPE="ext4"
 ```
 
-Добавляем fstab конфиг с монтированием нашего extroot:
+Добавляем в fstab монтирование нашего extroot:
 ```
 DEVICE="/dev/dm-0"
 eval $(block info ${DEVICE} | grep -o -e 'UUID="\S*"')
@@ -300,7 +315,10 @@ EOF
 chmod +x /sbin/block
 ```
 
-И последним шагом создаем файлик `/.use_crypt_extroot` в _текущем_  `rootfs_data`  - это наш стоп-кран: `touch /.use_crypt_extroot`
+И последним шагом создаем файлик `/.use_crypt_extroot` в _текущем_  `rootfs_data`  - это наш стоп-кран:
+```
+touch /.use_crypt_extroot
+```
 
 На всякий случай, перед перезагрузкой стоит проверить работоспособность конструкции:
 ```
@@ -329,20 +347,21 @@ nfsd /proc/fs/nfsd nfsd rw,relatime 0 0
 overlayfs:/overlay / overlay rw,noatime,lowerdir=/,upperdir=/overlay/upper,workdir=/overlay/work 0 0
 ```
 
-Фуф, теперь-то можно ребутаться, проверять что все успешно смонтировалось и донастраивать роутер.
+Фуф, выглядит как успех! Теперь-то можно ребутаться, проверять что все успешно смонтировалось и донастраивать роутер уже в пошифрованном руте.
 
 # In action
-Для минимальной проверки я завел две AP - `GoodPotato` и `BadPotato`, одна в пошифрованном extroot, вторая нет. Самое время проверить делом, я этого долго ждал! :)
+Самое время проверить делом, я этого долго ждал :) Для наглядности я завел две AP - `GoodPotato` и `BadPotato`, одна в пошифрованном extroot, вторая нет. 
 
-Вот загрузка с разблокировкой LUKS контейнера:
+Вот загрузка с разблокировкой LUKS-контейнера:
 ![](/assets/images/posts/glinet-fido2/good-boot.png){: .align-center}
 
 И без:
 ![](/assets/images/posts/glinet-fido2/bad-boot.png){: .align-center}
 
-Чего и добивались :)
+КРАСОТА ясчитаю!
 
 ## Final thoughts
-Пожалуй, я остался доволен текущим результатом. Да, в [fidele](https://github.com/buglloc/openwrt-packages/tree/main/fidele) очень есть что улучшить (а где нет?). Да, имеющиеся FIDO2 токены далеки от моего идеала. Но это все явно не тянет на deal-breaker. Главное, что сам концепт жизнеспособен и просто требует еще чуточку внимания и любви (как и все мы ^^).
+Как и всегда с такими постами, может показаться, что как-то все слишком уж легко, но это не так. Если честно, то совсем не так, поэтому не отчаивайтесь если при попытке повторить что-то будет не взлетать - это норма :)
+Если говорить про получившийся результат, то я скорее остался доволен. Да, в [fidele](https://github.com/buglloc/openwrt-packages/tree/main/fidele) очень есть что улучшить (а где нет? хех). Да, имеющиеся FIDO2 токены далеки от моего идеала. Но это все явно не тянет на deal-breaker. Главное, что сам концепт жизнеспособен и просто требует еще чуточку внимания и любви (как и все мы ^^).
 
 Всем благ (づ˶•༝•˶)づ♡
