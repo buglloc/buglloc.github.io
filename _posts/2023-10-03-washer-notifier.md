@@ -335,7 +335,7 @@ sensor:
   - часы [Ulanzi TC001](https://ut.buglloc.com/iot/ulanzi-awtrix/), на которые надо бы доставить нотификашку
   - телефоны, на которые надо бы доставить пушик
 
-Звучит, как время доставать JSONклей. И так оно и есть, потому как для этого я написал flow для [Node-RED](https://nodered.org/) ([сорец]()):
+Звучит, как время доставать JSONклей. И так оно и есть, потому как для этого я написал flow для [Node-RED](https://nodered.org/) ([сорец](https://gist.github.com/buglloc/3ea4cf04a89e318fb58cc6d86886bbe0#file-washer-notifier-flow-json)):
 ![](/assets/images/posts/wn/node-red-notify-flow.png)
 
 За кубиками я спрятал следующую логику работы:
