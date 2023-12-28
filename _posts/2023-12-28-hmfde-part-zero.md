@@ -162,7 +162,7 @@ $ echo '{"request": "body"}' | ssh boundbox.local -- /some/path
 
 ## Closure
 Дальше я планирую написать еще, как минимум, два поста:
-  - один про аппаратно-софтовую реализацию BoundBox ([спойлер](/assets/images/posts/hmfde/spolier.jpg))
+  - один про аппаратно-софтовую реализацию BoundBox ([спойлер](/assets/images/posts/hmfde/spoiler.jpg))
   - другой о пусконаладочных работах, готовке initramfs и дальнейших планах
 
 Но это потом, а пока всем кота (づ˶•༝•˶)づ♡
