@@ -7,7 +7,7 @@ categories:
   - home-infra
 ---
 Если прошлый пост (см. [Homemade FDE: Part Zero](https://ut.buglloc.com/home-infra/hmfde-part-zero/)) в большей степени был вступительным, то в этом я хочу рассказать про [BoundBoxESP](https://github.com/buglloc/BoundBoxESP), как о всратом сердце всей истории с домашним шифрованием :)
-<figure style="width: 800px">
+<figure style="max-width: 800px">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/hmfde/part-one-cover.jpg" alt="">
 </figure>
 
@@ -26,14 +26,14 @@ categories:
 Невероятно, но с учетом нагрузки на будущий сервис его можно крутить на любой около-современной картошке :) Вариантов по хранению/получению мастер-ключа у нас тоже довольно много. А значит наиболее честный ответ в выборе железа будет "я так захотел".
 
 Например, это могло бы быть что-то с TPM. Будь-то amd64 или arm64:
-<figure style="width: 600px">
+<figure style="max-width: 600px">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/hmfde/hw-variants-tpm.jpg" alt="">
   <figcaption class="align-center">ZX01 Plus / RPi4 + TPM9670</figcaption>
 </figure>
 И, на мой вкус, это было бы чертовски скучно. А мы тут вообще-то приятное с полезным совмещаем, не до скучных решений знаете ли. Из чуть более приземленных соображений - очень плохая утилизация. Тот же N100 в ZX01 будет во-о-бще ничем не занят примерно все время, захочется или селить что-то рядом (wat?), или как-то совсем глупо получается.
 
 Чуть разбавить скуку и выровнять КПД, можно было бы с помощью одноплатников форм-фактора Raspberry Pi Zero (или Orange Pi Zero) со смарт-картой:
-<figure style="width: 600px">
+<figure style="max-width: 600px">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/hmfde/hw-variants-piv.jpg" alt="">
   <figcaption  class="align-center">Radxa Zero + YubiKey / RPi Zero + Touch E-Ink / MangoPi MQ-PRO + YubiKey</figcaption>
 </figure>
@@ -92,15 +92,15 @@ categories:
 
 Запаиваем и проверяем на весу, что все выглядит рабочим:
 
-<img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/hmfde/boundbox-air-test.jpg" style="max-width: 600px" />
+![air-test](/assets/images/posts/hmfde/boundbox-air-test.jpg)
 
 "Корпусируем":
 
-<img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/hmfde/boundbox-underwear.jpg" style="max-width: 600px" />
+![underwear](/assets/images/posts/hmfde/boundbox-underwear.jpg)
 
 Та-да!
 
-<img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/hmfde/boundbox-final.jpg" style="max-width: 600px" />
+![final](/assets/images/posts/hmfde/boundbox-final.jpg)
 
 
 Фуф, можем откладывать в сторону паяльник и DIY набор для детей от 5 до 10 лет, они нам больше не понадобятся. Далее ручной труд, только в привычном для нас смысле ;)
