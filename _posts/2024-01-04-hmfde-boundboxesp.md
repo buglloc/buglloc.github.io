@@ -6,7 +6,7 @@ header:
 categories:
   - home-infra
 ---
-Если прошлый пост (см. [Homemade FDE: Part Zero](https://ut.buglloc.com/home-infra/hmfde-part-zero/)) в большей степени был вступительным, то в этом я хочу рассказать про [BoundBoxESP](https://github.com/buglloc/BoundBoxESP), как о всратом сердце всей истории с "бабушкиным" шифрованием :)
+Если прошлый пост (см. [Homemade FDE: Part Zero](https://ut.buglloc.com/home-infra/hmfde-part-zero/)) в большей степени был вступительным, то в этом я хочу рассказать про [BoundBoxESP](https://github.com/buglloc/BoundBoxESP), как о всратом сердце всей истории с домашним шифрованием :)
 <figure style="width: 800px">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/hmfde/part-one-cover.jpg" alt="">
 </figure>
@@ -35,7 +35,7 @@ categories:
 Чуть разбавить скуку и выровнять КПД можно было бы с помощью одноплатников форм-фактора Raspberry Pi Zero (или Orange Pi Zero) со смарт-картой:
 <figure style="width: 600px">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/hmfde/hw-variants-piv.jpg" alt="">
-  <figcaption  class="align-center">Radxa Zero + YubiKey 5C Nano / RPi Zero + Touch E-Ink Display / MangoPi MQ-PRO + YubiKey 5C Nano</figcaption>
+  <figcaption  class="align-center">Radxa Zero + YubiKey / RPi Zero + Touch E-Ink / MangoPi MQ-PRO + YubiKey</figcaption>
 </figure>
 Но, будем честны, веселее становится в основном за счет проблем со скоростью загрузки линуксов. Это решабельно, но я сказал, что хочу больше веселья! :)
 
@@ -69,7 +69,7 @@ categories:
   2. [T-Display-S3-Pro](https://www.lilygo.cc/products/t-display-s3-pro) на момент старта проекта не был широко доступен
   3. Выведено достаточное количество хороших пинов для подключения W5500 по SPI
 
-Ну и в целом это добротная, современная доска с двухъядерным ESP32-S3R8, 16MB Flash, 8MB PSRAM, встроенной зарядкой для аккумулятора и 1.91" сенсорным (CST816) IPS Amoled экраном (RM67162) разрешением 240x536 точек. Из минусов только отсутствие вывода RST пина и какого-либо крепежа (ушки бы там для M2.5, например), но чем-то пришлось пожертвовать. Помимо прочего, ESP32-S3 обещал мне какой-никакой [Secure Boot](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32s3/security/secure-boot-v2.html), [Flash](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32s3/security/flash-encryption.html) и [NVS](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32s3/api-reference/storage/nvs_flash.html#nvs-encryption) encryption, что само по себе довольно не плохо, хоть, конечно, и не так ценно при вводе пароля. Надеюсь не сплоховал :)
+Ну и в целом это добротная, современная доска на базе ESP32-S3R8 с двухъядерным Xtensa® LX7, 16MB Flash, 8MB PSRAM, встроенной зарядкой для аккумулятора и 1.91" сенсорным (CST816) IPS Amoled экраном (RM67162) разрешением 240x536 точек. Из минусов только отсутствие вывода RST пина и какого-либо крепежа (ушки бы там для M2.5, например), но чем-то пришлось пожертвовать. Помимо прочего, ESP32-S3 обещал мне какой-никакой [Secure Boot](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32s3/security/secure-boot-v2.html), [Flash](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32s3/security/flash-encryption.html) и [NVS](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32s3/api-reference/storage/nvs_flash.html#nvs-encryption) encryption, что само по себе довольно не плохо, хоть, конечно, и не так ценно при вводе пароля. Надеюсь не сплоховал :)
 
 ## Дела паяльные
 К счастью, подключать нам только W5500:
@@ -108,7 +108,7 @@ categories:
 Написан  [BoundBoxESP](https://github.com/buglloc/BoundBoxESP) на C++ поверх [ESP-IDF](https://idf.espressif.com/) с использованием [LibSSH-ESP32](https://github.com/ewpa/LibSSH-ESP32) и [LVGL](https://lvgl.io/). Почему ESP-IDF, а не Arduino спросите вы? А потому что ESP-IDF:
   - предлагает писать на C++23 (см. [C++ Support](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32/api-guides/cplusplus.html)) или C, а не каком-то подмножестве C++ именуемым Arduino "language"
   - использует запчасти из FreeRTOS (см. [FreeRTOS (ESP-IDF)](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32/api-reference/system/freertos_idf.html)) с шедулером задач, событийной моделью и прочими благами цивилизации. Больше никаких `if (curMillis - prevMillis >= interval)` на ровном месте (e.g. [Multitasking with Arduino](https://www.seeedstudio.com/blog/2021/05/11/multitasking-with-arduino-millis-rtos-more/))
-  * что логично, своевременно получает поддержку новых Espressif SoC. Так, например, поддержка ESP32 С6/H2 все еще не докатилась через три слоя абстракций (в норме это [ESP-IDF](https://github.com/espressif/esp-idf) -> [Arduino-ESP32](https://github.com/espressif/arduino-esp32/) -> [PlatformIO](https://platformio.org/)).
+  * что логично, своевременно получает поддержку новых Espressif SoC. Так, например, поддержка ESP32 С6/H2 все еще не докатилась через три слоя абстракции (в норме это [ESP-IDF](https://github.com/espressif/esp-idf) -> [Arduino-ESP32](https://github.com/espressif/arduino-esp32/) -> [PlatformIO](https://platformio.org/)).
   * ощущается целостным фреймворком, со своей идеологией и базовыми принципами. Arduino же просто сборище бибок, которых связывает страсть к `Begin` и `Loop`
   * имеет [шикарную документацию](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32s3/get-started/index.html), большая часть разделов которой сопровождается [полноценными примерами](https://github.com/espressif/esp-idf/tree/master/examples)
 
@@ -205,7 +205,7 @@ $ echo '{"salt":"cHhrQThGeFdUWDZCMWg2MVFLQTBONEpXCg=="}' | ssh bbw0.buglloc.cc \
 }
 ```
 
-Не стану затягивать и ныть о том как и почему я отказался от использования [WolfSSH](https://github.com/wolfSSL/wolfssh) или о портировании [LilyGo-AMOLED](https://github.com/buglloc/BoundBoxESP/tree/2a3f212581254fd31d072d35ea22b18fabaf1f16/components/t_amoled) под ESP-IDF. Лучше вместо нытья демо покажу ^\_^ !
+Не стану затягивать и ныть о том как и почему я отказался от использования [WolfSSH](https://github.com/wolfSSL/wolfssh) или о портировании [LilyGo-AMOLED](https://github.com/buglloc/BoundBoxESP/tree/2a3f212581254fd31d072d35ea22b18fabaf1f16/components/t_amoled) под ESP-IDF. Лучше вместо нытья демо покажу ^\_^, вот!
 
 ## В действии
 Чтобы ничего не пропустить (и не забыть в будущем, ха-ха) - мы начнем с самого начала. Да-да, с клонирования репо и настройки под себя (i.e. логин/ключ админа):
@@ -214,7 +214,7 @@ $ echo '{"salt":"cHhrQThGeFdUWDZCMWg2MVFLQTBONEpXCg=="}' | ssh bbw0.buglloc.cc \
 На этом этапе мы должны получить полностью рабочую коробку, но я предлагаю еще чуть докинуть безопасности, усложнив получение данных из NVS. Для этого включаем релизное шифрование флешки (doc: [Flash Encryption: Release Mode](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32s3/security/flash-encryption.html#flash-enc-release-mode)) на "хостовом" ключе (doc: [Flash Encryption: Using Host Generated Key](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32s3/security/flash-encryption.html#using-host-generated-key)):
   <div id="boundbox-flash-encryption"></div>
 
-На всякий случай - **использование хостового ключа обязательно**, т.к. я умышленно отказался от OTA, дабы быть ближе к write-only работе с секретами. Ну а пока мы получили шифрование дефолтных партиций и NVS. Осталось дело за [Secure Boot](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32s3/security/secure-boot-v2.html#how-to-enable-secure-boot-v2), т.к. иначе какой смысл в таком шифровании? `PARTITION_TABLE_OFFSET` я [потюнил заранее](https://github.com/buglloc/BoundBoxESP/blob/ec4ec6db7a2bca0f9969ff73336dcb58211c9f3e/sdkconfig.defaults#L12), поэтому места под [распухший бутлоадер](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32s3/security/secure-boot-v2.html#bootloader-size) нам должно без проблем хватить.
+На всякий случай - **использование хостового ключа обязательно**, т.к. я умышленно отказался от OTA, дабы быть ближе к принципу write-only секретов. Ну а пока мы получили шифрование дефолтных партиций и NVS. Осталось дело за [Secure Boot](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32s3/security/secure-boot-v2.html#how-to-enable-secure-boot-v2), т.к. иначе какой смысл в таком шифровании? `PARTITION_TABLE_OFFSET` я [потюнил заранее](https://github.com/buglloc/BoundBoxESP/blob/ec4ec6db7a2bca0f9969ff73336dcb58211c9f3e/sdkconfig.defaults#L12), поэтому места под [распухший бутлоадер](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32s3/security/secure-boot-v2.html#bootloader-size) нам должно без проблем хватить.
 
 Погнали, нам нужно настроить бутлоадер, зашифровать его + partition table + приложеньку и прошить:
   <div id="boundbox-secure-boot"></div>
