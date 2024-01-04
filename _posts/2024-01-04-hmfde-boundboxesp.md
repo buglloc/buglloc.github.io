@@ -26,14 +26,14 @@ categories:
 Невероятно, но, с учетом нагрузки на будущий сервис, его можно крутить на любой около-современной картошке :) Вариантов по хранению/получению мастер-ключа у нас тоже довольно много. А значит наиболее честный ответ в выборе железа будет "я так захотел".
 
 Например, это могло бы быть что-то с TPM. Будь-то amd64 или arm64:
-<figure style="width: 800px">
+<figure style="width: 600px">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/hmfde/hw-variants-tpm.jpg" alt="">
   <figcaption class="align-center">ZX01 Plus / RPi4 + TPM9670</figcaption>
 </figure>
 И, на мой вкус, это было бы чертовски скучно. А мы тут вообще-то приятное с полезным совмещаем, не до скучных решений знаете ли. Из чуть более приземленных соображений - очень плохая утилизация, тот же N100 в ZX01 будет во-о-бще ничем не занят примерно все время, захочется или селить что-то рядом (wat?) или как-то совсем глупо получается.
 
 Чуть разбавить скуку и выровнять КПД можно было бы с помощью одноплатников форм-фактора Raspberry Pi Zero (или Orange Pi Zero) со смарт-картой:
-<figure style="width: 800px">
+<figure style="width: 600px">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/hmfde/hw-variants-piv.jpg" alt="">
   <figcaption  class="align-center">Radxa Zero + YubiKey 5C Nano / RPi Zero + Touch E-Ink Display / MangoPi MQ-PRO + YubiKey 5C Nano</figcaption>
 </figure>
@@ -60,7 +60,7 @@ categories:
 Так я и поступил, выбрав для текущей версии [BoundBoxESP](https://github.com/buglloc/BoundBoxESP#TODO-ЗАПИНИТЬ-ВЕРСИЮ) :
   - [LILYGO T-Display S3 AMOLED](https://www.aliexpress.com/item/1005005416973021.html)  как основу всего + средство ввода
   - [3.7V 1000mAh 503450 Battery](https://www.aliexpress.com/item/4000151489952.html) как ответ электрику
-  - [W5500 Ethernet Module](https://www.aliexpress.com/item/1005006127400904.html) потому что лучший WiFi - проводной WiFi
+  - [W5500 Ethernet Module](https://www.aliexpress.com/item/1005006127400904.html) потому что лучший WiFi - проводной WiFi (но это не точно)
 
 Полный комплект обошелся мне в $24.22 + $5.81 + $2.56 = $32.59 или половинка YubiKey 5C Nano ($65 офф цена, в Таиланде дешевле $80 не встречал)
 
@@ -91,14 +91,17 @@ categories:
 ![bound-box-schematic](/assets/images/posts/hmfde/boundbox-schematic.excalidraw.png)
 
 Запаиваем и проверяем на весу, что все выглядит рабочим:
-![boundbox-test-wiring](/assets/images/posts/hmfde/boundbox-air-test.jpg)
+
+<img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/hmfde/boundbox-air-test.jpg" style="max-width: 600px" />
 
 "Корпусируем":
-![boundbox-underwear](/assets/images/posts/hmfde/boundbox-underwear.jpg)
+
+<img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/hmfde/boundbox-underwear.jpg" style="max-width: 600px" />
 
 Та-да!
 
-![boundbox-final](/assets/images/posts/hmfde/boundbox-final.jpg)
+<img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/hmfde/boundbox-final.jpg" style="max-width: 600px" />
+
 
 Фуф, можем откладывать в сторону паяльник и DIY набор для детей от 5 до 10 лет, они нам больше не понадобятся. Далее ручной труд, только в привычном для нас смысле ;)
 ## Дела программные
@@ -219,7 +222,7 @@ $ echo '{"salt":"cHhrQThGeFdUWDZCMWg2MVFLQTBONEpXCg=="}' | ssh bbw0.buglloc.cc \
 Вуаля! Теперь мы проверяем и подпись бутлоадера и подпись приложеньки, что не позволит пограничнику загрузить собственные и считать все с флешки. А получить прямой доступ к флешке ему не позволит шифрование. Тут главное ключи не потерять, хех :))
 
 Не устали? Самое время полюбоваться итоговым результатом под присмотром Teo:
-<p><iframe width="560" height="315" src="https://www.youtube.com/embed/E3VZPDKVMjw?si=Ods67ZMe70BR74dt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></p>
+{% include video id="RFMkkGlY-y0" provider="youtube" %}
 
 <script src="/assets/misc/asciinema-player.min.js"></script>
 <script>
