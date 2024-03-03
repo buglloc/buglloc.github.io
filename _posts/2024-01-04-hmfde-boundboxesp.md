@@ -7,6 +7,7 @@ categories:
   - home-infra
 ---
 Если прошлый пост (см. [Homemade FDE: Part Zero](https://ut.buglloc.com/home-infra/hmfde-part-zero/)) в большей степени был вступительным, то в этом я хочу рассказать про [BoundBoxESP](https://github.com/buglloc/BoundBoxESP), как о всратом сердце всей истории с домашним шифрованием :)
+Если прошлый пост (см. [Homemade FDE: Part Zero](https://ut.buglloc.com/home-infra/hmfde-part-zero/)) в большей степени был вступительным, то в этом я хочу рассказать про [BoundBoxESP](https://github.com/buglloc/BoundBoxESP), как о всратом сердце всей истории с домашним шифрованием :)
 <figure style="max-width: 800px">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/hmfde/part-one-cover.jpg" alt="">
 </figure>
