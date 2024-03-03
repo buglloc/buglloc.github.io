@@ -2,7 +2,7 @@
 title: "ESPHome: T-Display S3 Long"
 classes: wide
 header:
-  og_image: /assets/images/posts/t-display-s3-long-esphome/t-display-s3-long-esphome-cover.png
+  og_image: /assets/images/posts/t-display-s3-long-esphome/t-display-s3-long-esphome-cover.jpg
 categories:
   - iot
   - esphome
