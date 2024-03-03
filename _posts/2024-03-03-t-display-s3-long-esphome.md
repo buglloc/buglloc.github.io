@@ -102,7 +102,7 @@ def to_code(config):
 ## ESPHome: AXS15231 component
 К счастью, один добрый человек уже добавил [поддержку QSPI в ESPHome](https://github.com/esphome/esphome/pull/5925), поэтому мне осталось только реализовать [Display](https://esphome.io/components/display/index.html) и [Touchscreen](https://esphome.io/components/touchscreen/index.html) компоненты.
 
-Сказано - сделано. Пара утроночеров копипасты и [нужный компонент готов](https://github.com/buglloc/esphome-components/tree/main/components/axs15231). На 80% состоит из С++ и на 20% из Python, что считаю ожидаемым - ведь питоний там чисто в роли клея.
+Сказано - сделано. Пара утроночеров копипасты и [нужный компонент готов](https://github.com/buglloc/esphome-components/tree/main/components/axs15231). На 80% состоит из С++ и на 20% из Python, что, на мой вкус, звучит не плохо.
 
 К сожалению, плохость примеров от LILYGO и моя тупость пока оставили за бортом такие фичи как:
   - DMA (скорее всего должен помочь ускорить рендеринг)
