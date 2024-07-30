@@ -65,15 +65,15 @@ author:
   avatar : "/assets/images/bio-photo.jpg"
   bio    : "Еще один скучный *сек."
   links:
-    - label: "Сайтик"
-      icon: "fas fa-fw fa-link"
-      url: "https://buglloc.com"
     - label: "Гитхабчик"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/buglloc"
     - label: "Канальчик"
       icon: "fab fa-fw fa-telegram"
       url: "https://t.me/UTBDK"
+    - label: "Резюмешка"
+      icon: "fab fa-fw fa-file"
+      url: "https://cv.buglloc.com"
 
 footer:
   links:
