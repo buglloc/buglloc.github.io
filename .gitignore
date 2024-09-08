@@ -1,5 +1,7 @@
+vendor
 _site
 .sass-cache
 .obsidian
 .jekyll-metadata
+.bundle
 Gemfile.lock
