@@ -6,7 +6,10 @@ header:
 categories:
   - iot
   - esphome
+redirect_from:
+  - /iot/esphome/t-display-s3-long-esphome/
 ---
+
 Никогда ранее не писал компоненты для [ESPHome](https://esphome.io/), а тут судьба подкинула [T-Display S3 Long](https://www.lilygo.cc/products/t-display-s3-long), и пришлось. Именно об этом сегодняшняя зарисовочка ;)
 <figure style="max-width: 800px">
   <img src="{{ site.url }}{{ site.baseurl }}/assets/images/posts/t-display-s3-long-esphome/t-display-s3-long-esphome-cover.jpg" alt="">

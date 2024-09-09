@@ -3,6 +3,8 @@ title: "ExternalDNS + AdGuard Home + CoreDNS => ExternalDNS + DNSGateway + AdGua
 classes: wide
 categories:
   - home-infra
+redirect_from:
+  - /home-infra/bye-coredns/
 ---
 
 До сегодня я использовал [CoreDNS](https://coredns.io/) как основной DNS сервер в домашней инфре. До сегодня, потому что его [Special Behaviour](https://coredns.io/plugins/etcd/#special-behaviour) в etcd плагине совсем не то, что ожидаешь увидеть по итогу. Я понимаю, почему они пошли по такому всратому пути, но от этого мне как-то не легче. Зацените сами: [CoreDNS+etcd vs DNS здорового человека](https://gist.github.com/buglloc/7f56e701d2adc36b8c02d9de9f5879e1)

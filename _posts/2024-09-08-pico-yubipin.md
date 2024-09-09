@@ -4,9 +4,11 @@ classes: wide
 header:
   og_image: /assets/images/posts/pico-yubipin/cover.png
 categories:
-  - iot
-  - esphome
+  - security
+redirect_from:
+  - /iot/esphome/pico-yubipin/
 ---
+
 Уж не знаю как так вышло, но в последнее время мне то и дело хочется подебагать USB. И пока я для себя не решил, каким должен быть идеальный USB Sniffer (напишу как узнаю ^^), решил запилить небольшую демку подглядывания в USB трафике PIN от PIV в [Yubikey](https://www.yubico.com/authentication-standards/smart-card/).
 
 ![cover](/assets/images/posts/pico-yubipin/cover.png){: .align-center}

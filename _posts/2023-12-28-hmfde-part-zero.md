@@ -5,6 +5,8 @@ header:
   og_image: /assets/images/posts/hmfde/bound-box-principal.excalidraw.png
 categories:
   - home-infra
+redirect_from:
+  - /home-infra/hmfde-part-zero/
 ---
 
 Здравствуйте, меня зовут Андрей и у меня есть какое-то количество железа без шифрования диска:

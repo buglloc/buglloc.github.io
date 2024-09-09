@@ -5,6 +5,8 @@ header:
   og_image: "/assets/images/posts/glinet-fido2/cover.jpg"
 categories:
   - home-infra
+redirect_from:
+  - /home-infra/travel-router-fido2-luks/
 ---
 Уж к концу-то 23-го года польза от дорожного роутера должна быть очевидна любому истинному шотландцу, но ко мне это осознание пришло буквально в прошлом году. 
 Видимо, нужно было кожей почувствовать :) Ну а какое дорожное устройство без шифрования хранящихся на нем данных? О том, как я дружил [FIDO2](https://fidoalliance.org/fido2/) [HMAC Secret Extension](https://fidoalliance.org/specs/fido-v2.0-id-20180227/fido-client-to-authenticator-protocol-v2.0-id-20180227.html#sctn-hmac-secret-extension)  с [LUKS](https://gitlab.com/cryptsetup/cryptsetup) контейнером при запуске [OpenWrt](https://openwrt.org/), и будет этот пост.

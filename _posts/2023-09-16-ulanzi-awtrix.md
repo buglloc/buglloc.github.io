@@ -5,6 +5,8 @@ header:
 classes: wide
 categories:
   - iot
+redirect_from:
+  - /iot/ulanzi-awtrix/
 ---
 
 До сегодня я считал "умные" настольные часы не многим полезнее "умного" чайника. Но [Ulanzi TC001 Desktop Clock](https://www.ulanzi.com/products/ulanzi-pixel-smart-clock-2882?ref=28e02dxl) + [Awtrix Light]( https://github.com/Blueforcer/awtrix-light) смогли меня разубедить. Кто бы мог подумать, но иметь какую-то информацию всегда на виду и правда довольно удобно :)

@@ -5,6 +5,8 @@ header:
 classes: wide
 categories:
   - home-infra
+redirect_from:
+  - /home-infra/dnsgateway-acme/
 ---
 
 До сегодня я переживал за свои [Cloudflare](https://www.cloudflare.com/) токены разбросанные по кучке машин. Благо не так давно я начал писать [DNSGateway](https://github.com/buglloc/DNSGateway), позволяющий [более]гранулярно управлять правами на DNS зону, а сегодня закончил пееезд на него :)

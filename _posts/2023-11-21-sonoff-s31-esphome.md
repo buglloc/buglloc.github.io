@@ -5,6 +5,8 @@ header:
   og_image: /assets/images/posts/sonoff-s31/sonoff_cover.png
 categories:
   - iot
+redirect_from:
+  - /iot/sonoff-s31-esphome/
 ---
 Одним вечерним вечером мне понадобились умные розетки для всякой мелочевки. Ну знаете, зашедулить включение фумигатора от комариков и все в таком духе. Имеющийся [SMATRUL WiFi Socket](https://www.lazada.co.th/products/smatrul-20a16a-tuyasmart-life-wifi-socket-universal-us-eu-smart-plug-adapter-power-monitor-european-plug-wireless-remote-voice-timer-for-google-homealexatmall-genie-i2911432612-s10659100651.html?dsource=share&laz_share_info=674305705_9_100_100322224233_674305706_null&laz_token=88cc5f36711df9024f45cb3f493e2031&exlaz=e_iqeJxmuQOjPGip8qo24MCSTeQCjDld4siVQ4kY1ODqrCXvTKdNAtBb55%2BgIiSkmNnXkPoNuoMIIpR8IEI%2FLi1U0sC6tUOx2TD3WnASIas1Y%3D&sub_aff_id=social_share&sub_id2=674305705&sub_id3=100322224233&sub_id6=CPI_EXLAZ) из поста [про стиралочку](https://ut.buglloc.com/iot/washer-notifier/) мне не понравился, поэтому я занырнул в поиск Lazada/AliExpress и вынырнул с [Sonoff S31](https://sonoff.tech/product/smart-plugs/s31-s31lite/). Собсно, начало коротенькой зарисовочки о ее перепрошивке вы сейчас и читаете ;)
 ![](/assets/images/posts/sonoff-s31/sonoff_cover_tgdraw.png){: .align-center}
