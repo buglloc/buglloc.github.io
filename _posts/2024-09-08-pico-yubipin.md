@@ -54,12 +54,46 @@ redirect_from:
 
 На мой вкус, это столь же удивительный факт, сколь и известный. История знает разнообразные исследования, сам я проворачивал такое в 2022 с помощью эмулятора смарт-карт и малинки. В общем, я вас предупредил ;)
 ## О PicoYubiPin
-Но это все слова, давайте уже к делу! Как я и говорил в самом начале, какое-то время назад я начал мечтать о идеальном USB сниффере. А пока его не нашлось, решил написать простенький сниффер для получения PIN от PIV. Так субботним вечером и родился [PicoYubiPin](https://github.com/buglloc/pico_yubipin/). Написан он на С и по своей сути является USB сниффером (cпасибо [pico_usb_sniffer](https://github.com/tana/pico_usb_sniffer) за вдохновение) с фильтром, [который должен пропустить всего один пакетик](https://github.com/buglloc/pico_yubipin/blob/69a26f273d0adc414d6ad3bf54c05ee2ffd2ebed/main.cc#L192-L236) (уровни снизу вверх):
+Но это все слова, давайте уже к делу! Как я и говорил в самом начале, какое-то время назад я начал мечтать о идеальном USB сниффере. А пока его не нашлось, решил написать простенький сниффер для получения PIN от PIV. Так субботним вечером и родился [PicoYubiPin](https://github.com/buglloc/pico_yubipin/).
+
+Написан `PicoYubiPin` на С и по своей сути является USB сниффером (cпасибо [pico_usb_sniffer](https://github.com/tana/pico_usb_sniffer) за вдохновение) с фильтром, [который должен пропустить всего один пакетик](https://github.com/buglloc/pico_yubipin/blob/69a26f273d0adc414d6ad3bf54c05ee2ffd2ebed/main.cc#L192-L236) (уровни снизу вверх):
   - USB Link Layer: `PID == 0x3 || PID == 0xB` (`DATA0` или `DATA1`)
   - CCID: `MessageType == XfrBlock`
   - PC/SC: `APDU VerifyPin` (см. [APDU: Verify PIN](https://docs.yubico.com/yesdk/users-manual/application-piv/apdu/verify.html))
 
-Ну и вывести результат на дисплей. Ничего хитрого, поэтому давайте о хардваре!
+Пример такого пакетика в деталях:
+```
+c3  <--- USBLL (SYNC + PID "DATA0")
+6f  <--- CCID: MessageType (PC_to_RDR_XfrBlock)
+0e  <--|
+00  <- | CCID: Message length
+00  <- |
+00  <--|
+00  <--- CCID: Slot
+16  <--- CCID: Seq No
+00  <--|
+00  <- | CCID: Message specific bytes
+00  <--|
+00  <--- APDU: CLA
+20  <--- APDU: INS
+00  <--- APDU: P1
+80  <--- APDU: P2
+08  <--- APDU: Lc
+4d  <--|
+65  <- |
+6d  <- |
+65  <- |
+43  <- | APDU: Data (our PIN padded with 0xFF)
+68  <- |
+61  <- |
+74  <--|
+00  <--- APDU: Le
+15  <--|
+5a  <--| USBLL: CRC16
+```
+
+Как вы видите, ничего хитрого или тайного. Осталось попарсить PIN и вывести на экран, а потому давайте о хардваре!
+
 ## PicoYubiPin: хардваре
 Название намекает, потому основу я взял [RP2040 Zero](https://www.waveshare.com/wiki/RP2040-Zero):
   - дешевый ($1-2 на распродаже)
