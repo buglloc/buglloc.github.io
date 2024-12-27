@@ -225,7 +225,7 @@ $ echo '{"salt":"cHhrQThGeFdUWDZCMWg2MVFLQTBONEpXCg=="}' | ssh bbw0.buglloc.cc \
 Вуаля! Теперь мы проверяем и подпись бутлоадера, и подпись приложеньки, что не позволит пограничнику загрузить собственные и считать все с флешки. Прямой же доступ мы ограничили ранее, за счет шифрования. Вот и чудненько, теперь главное ключи не потерять, хех :))
 
 Не устали? Самое время полюбоваться итоговым результатом под присмотром Teo:
-{% include video id="RFMkkGlY-y0" provider="youtube" %}
+{% include video id="1042399360" provider="vimeo" %}
 
 <script src="/assets/misc/asciinema-player.min.js"></script>
 <script>

@@ -12,7 +12,7 @@ redirect_from:
 До сегодня я считал "умные" настольные часы не многим полезнее "умного" чайника. Но [Ulanzi TC001 Desktop Clock](https://www.ulanzi.com/products/ulanzi-pixel-smart-clock-2882?ref=28e02dxl) + [Awtrix Light]( https://github.com/Blueforcer/awtrix-light) смогли меня разубедить. Кто бы мог подумать, но иметь какую-то информацию всегда на виду и правда довольно удобно :)
 
 Текущий результат:
-<iframe width="258" height="158" src="https://www.youtube.com/embed/pvxAGwRQwQc?si=GujPcP1oHneVDdre" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+{% include video id="1042399383" provider="vimeo" %}
 
 ### От желания
 Как-то я насмотрелся блогеров и решил попробовать примерить на себя какой-нить пиксельный настольный дисплейчик. Например, ченить в духе [Divoom](https://divoom.com/products/pixoo-64). Собравшись с мыслями, я выписал для себя незамысловатый набор критериев:

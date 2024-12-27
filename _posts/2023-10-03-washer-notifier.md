@@ -350,8 +350,9 @@ sensor:
      * записываем время наступления события, дабы учесть его при обработке `washer_state`
      * отменяем нотификашку на часах
 
-Да, нотификации на часах получились не многопоточные, но я [пока] и не планировал добавлять новых источников :) Пробуем в деле:
-<p><iframe width="560" height="315" src="https://www.youtube.com/embed/XCrweif3As8?si=4oKOQMWB01iAAzgJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></p>
+Да, нотификации на часах получились не многопоточные, но я [пока] и не планировал добавлять новых источников :)
+Пробуем в деле:
+{% include video id="1042399392" provider="vimeo" %}
 
 Что и требовалось:
   - сначала вручную стриггерил событие `washer_state` так, как это сделала бы розетка

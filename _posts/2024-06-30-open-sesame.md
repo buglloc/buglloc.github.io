@@ -186,7 +186,7 @@ C [акселометром](https://www.aliexpress.com/item/1005007002557705.ht
 Но всегда лучше один раз увидеть, потому пробуем проверить input lag:
   - еще немного попрограммируем на ямлах: [конфиг для ESPHome](https://gist.github.com/buglloc/90e618bf0dc6768aa1746aba8f1b1ecb)
   - тестим:
-{% include video id="8mbDp18yUbw" provider="youtube" %}
+{% include video id="1042399885" provider="vimeo" %}
   - нраица! Самое время катить в прод.
 
 ## PinkyWinky: Holyiot
@@ -219,7 +219,7 @@ Memory region         Used Size  Region Size  %age Used
 Yay! Пора пробовать в бою:
   - в последний [на сегодня] раз программируем на ямлах: [конфиг для ESPHome](https://gist.github.com/buglloc/fc95593d7cb858fdaada9fea3265cf70)
   - и тестим:
-{% include video id="1b6GQJ5LkOk" provider="youtube" %}
+{% include video id="1042399893" provider="vimeo" %}
   - тааа-дааам, работает как и планировалось :)
 
 Дальше по планам проверсти больше полевых испытаний, чёнить помелочи поправить и уже зимо-осенью заняться автоматизацией открытия ворот и подключению к Find My Device. Да не скоро, но вы все равно не переключайтесь ;)
