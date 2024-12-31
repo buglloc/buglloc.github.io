@@ -1,5 +1,5 @@
 ---
-title: KVMBattle
+title: "KVMBattle: KVMZer0 vs KVMR0ck vs NanoKVM-W"
 classes: wide
 header:
   og_image: /assets/images/posts/kvmbattle/kvmbattle-cover.png
