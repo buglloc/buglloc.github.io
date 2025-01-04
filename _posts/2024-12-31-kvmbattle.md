@@ -36,7 +36,7 @@ categories:
 С ним я не очень экономил, поэтому выложил около $70 за [Radxa ZERO 3W](http://radxa.com/products/zeros/zero3w/) + [HDMI-CSI](https://a.aliexpress.com/_olvAXLh). По [ссылке](/kvmr0ck/), как всегда, найдете детальное описание.
 
 ## NanoKVM-W
-[NanoKVM-W](/nanokvm-w/) - WiFi мод для [NanoKVM](https://sipeed.com/nanokvm) от Sipeed:
+[NanoKVM-W](/nanokvm-w/) - WiFi мод для [NanoKVM Cube](https://sipeed.com/nanokvm) от Sipeed:
 ![cover](/assets/images/posts/kvmbattle/nanokvm.jpg){: .align-center}
 
 Стоил примерно $50-$60 (смотря как считать) и это яркий представитель:
@@ -48,7 +48,7 @@ categories:
 В качестве тестового стенда у нас будет какой-то ноутбук с виндой и power bank как источник питания для KVM:
 ![cover](/assets/images/posts/kvmbattle/stand.jpg){: .align-center}
 
-А в качестве софта [PiKVM](https://pikvm.org/) у `KVMZer0`/`KVMR0ck` и [NanoKVM](https://github.com/sipeed/NanoKVM) у `NanoKVM`. PiKVM можно было бы заменить на [TinyPilot](https://github.com/tiny-pilot/tinypilot), но я не нашел для себя преимуществ последнего (кроме желания денег за поддержку HTTPS офк).
+А в качестве софта [PiKVM](https://pikvm.org/) у `KVMZer0`/`KVMR0ck` и [NanoKVM](https://github.com/sipeed/NanoKVM) у `NanoKVM Cube`. PiKVM можно было бы заменить на [TinyPilot](https://github.com/tiny-pilot/tinypilot), но я не нашел для себя преимуществ последнего (кроме желания денег за поддержку HTTPS офк).
 
 Забегая вперед, скажу, что [KVMZer0](/kvmzer0/) с этим испытанием не справился - не хватило питания и пришлось подключать его к заряднику. Ну да как говорила моя бабушка - лучше один раз увидеть, а бабушку нужно слушать:
 {% include video id="1043068228" provider="vimeo" %}
@@ -61,6 +61,6 @@ categories:
   - если вам критичен input lag и хочется всяких ништяков - собирайте с HDMI-CSI bridge. Будет недешево, но это ваш выбор. Бонусом получите мощную железку в кармане
   - если хочется новых впечатлений - берите NanoKVM. Этому проекту все еще не хватает любви и ласки, но я верю в его успех
 
-Но не верьте одному мнению - посмотрите/почитайте другие посты на тему. Для себя же я пока выбрал NanoKVM, т.к. он чертовски мил и технически интересен. Но это мой выбор, я пока не могу его советовать всем и каждому.
+Но не верьте одному мнению - посмотрите/почитайте другие посты на тему. Для себя же я пока выбрал `NanoKVM Cube`, т.к. он чертовски мил и технически интересен. Но это мой выбор, я пока не могу его советовать всем и каждому.
 
 А пока у меня все, всем кота (づ˶•༝•˶)づ♡
